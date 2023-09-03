@@ -1,0 +1,26 @@
+problem link - https://leetcode.com/problems/contains-duplicate/submissions/
+
+problem - find duplicate in an array
+using sorting 
+time complexity is O(nlogn)
+
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+
+
+        int n=nums.size();
+        if(n==1)
+            return 0;
+
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-1; i++)
+            {
+                if(nums[i]==nums[i+1])
+                    return true;
+            }
+        
+        return false;
+    }
+};
