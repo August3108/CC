@@ -1,0 +1,85 @@
+// brute force
+bool searchElement(vector<int>& arr, int target) {
+    int size = arr.size(); // size of array
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == target)
+            return true;
+    }
+    return false;
+}
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int size = nums.size(); 
+        int longestSequence = 1;
+        for (int i = 0; i < size; i++) {
+            int currentNum = nums[i];
+            int count = 1;
+            // search for consecutive numbers
+            while (searchElement(nums, currentNum + 1) == true) {
+                currentNum += 1;
+                count += 1;
+            }
+
+            longestSequence = max(longestSequence, count);
+        }
+        return longestSequence;
+    }
+};
+
+// using sorting 
+
+class Solution {
+public:
+    int longestConsecutive(std::vector<int>& nums) {
+        if(nums.empty()) // if vector is empty
+            return 0;
+
+        std::sort(nums.begin(), nums.end()); // sort the vector
+
+        int longestSequence = 1;
+        int currentSequence = 1;
+
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] != nums[i - 1]) { // ignore duplicates
+                if (nums[i] == nums[i - 1] + 1) { // check for consecutive numbers
+                    currentSequence++;
+                } else {
+                    longestSequence = std::max(longestSequence, currentSequence);
+                    currentSequence = 1;
+                }
+            }
+        }
+
+        return std::max(longestSequence, currentSequence); // return the longest sequence
+    }
+};
+
+
+// using set 
+
+class Solution {
+public:
+    int longestConsecutive(std::vector<int>& nums) {
+        std::unordered_set<int> numSet(nums.begin(), nums.end()); // insert all numbers into a HashSet for O(1) lookup
+
+        int longestSequence = 0;
+
+        for (int num : nums) {
+            if (!numSet.count(num - 1)) { // if the current number is the start of a sequence
+                int currentNum = num;
+                int currentSequence = 1;
+
+                while (numSet.count(currentNum + 1)) { // count consecutive numbers
+                    currentNum++;
+                    currentSequence++;
+                }
+
+                longestSequence = std::max(longestSequence, currentSequence);
+            }
+        }
+
+        return longestSequence;
+    }
+};
