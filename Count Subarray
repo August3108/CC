@@ -1,0 +1,48 @@
+// Brute force 
+// loop through each element and start another loop taking current element as starting point
+
+// class Solution {
+// public:
+//     int subarraySum(vector<int>& nums, int k) {
+//        int sum = 0;
+//        int count = 0;
+
+//        for(int i=0; i<nums.size(); i++){
+//             for(int j=i; j<nums.size(); j++){
+//                 sum = sum + nums[j];
+//                 if (sum == k)
+//                 {
+//                     count++;
+//                 }
+//             }
+//             sum = 0;
+//        } 
+
+//        return count;
+        
+//     }
+// };
+
+// better solution is hashmap 
+// we store the sum as we go 
+// now from current sum we find k - current sum 
+// if its there in hashmap we increase count
+
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+       int sum = 0;
+       int count = 0;
+       map<int, int> mpp;
+        mpp[0] = 1;
+       for(int i=0; i<nums.size(); i++){
+            sum = sum + nums[i];
+            count += mpp[(sum - k)];
+            mpp[sum] += 1;
+       } 
+
+       return count;
+        
+    }
+};
