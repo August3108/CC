@@ -1,0 +1,26 @@
+https://leetcode.com/problems/binary-search/submissions/1256569210/
+
+int binarySearch(int first, int last, int target, vector<int>& nums) {
+    if (target > nums[last - 1] || target < nums[first]) {
+        return -1;
+    }
+    else {
+        int mid = (first + last) / 2;
+        if (target == nums[mid]) {
+            return mid;
+        }
+        else if (target < nums[mid]) {
+            return binarySearch(first, mid, target, nums);
+        }
+        else { // target > nums[mid]
+            return binarySearch(mid + 1, last, target, nums);
+        }
+    }
+}
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        return binarySearch(0, nums.size(), target, nums);
+    }
+};
